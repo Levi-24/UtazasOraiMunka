@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.IO;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -13,10 +14,16 @@ namespace Utazas
 {
     public partial class MainWindow : Window
     {
+        List<UtasAdat> utasok = new List<UtasAdat>();
+
         public MainWindow()
         {
             InitializeComponent();
-            UtasAdat()
+            using StreamReader sr = new StreamReader(@"../../../src/utasadat.txt");
+            while (!sr.EndOfStream) utasok.Add(new UtasAdat(sr.ReadLine()));
+            DataContext = this;
         }
     }
 }
+
+
