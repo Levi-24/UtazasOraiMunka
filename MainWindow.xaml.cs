@@ -21,7 +21,12 @@ namespace Utazas
             InitializeComponent();
             using StreamReader sr = new StreamReader(@"../../../src/utasadat.txt");
             while (!sr.EndOfStream) utasok.Add(new UtasAdat(sr.ReadLine()));
-            DataContext = this;
+
+            // Bind the list to the ListBox
+            utasListBox.ItemsSource = utasok;
+
+            int utasCount = utasok.Count;
+            TButasCount.Text = utasCount.ToString() + " utas akart felszállni a buszra!";
         }
     }
 }

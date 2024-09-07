@@ -1,22 +1,36 @@
 ﻿<Window x:Class="Utazas.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="800" Width="1200">
     <Grid>
-        <ListBox ItemsSource="{Binding Utasok}">
+        <ListBox Name="utasListBox" HorizontalAlignment="Left" VerticalAlignment="Center" Height="764" Width="410">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Vertical">
-                        <TextBlock Text="{Binding MegalloSorszam}" />
-                        <TextBlock Text="{Binding FelszallasDatum}" />
-                        <TextBlock Text="{Binding FelszallasIdo}" />
-                        <TextBlock Text="{Binding Azonosito}" />
-                        <TextBlock Text="{Binding Tipus}" />
-                        <TextBlock Text="{Binding Datum}" />
-                        <TextBlock Text="{Binding Jegy}" />
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Megálló sorszám:" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding MegalloSorszam}"/>
+
+                        <TextBlock Text="Felszállás dátum:" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding FelszallasDatum}"/>
+
+                        <TextBlock Text="Felszállás idő:" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding FelszallasIdo}"/>
+
+                        <TextBlock Text="Azonosító:" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding Azonosito}"/>
+
+                        <TextBlock Text="Típus:" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding Tipus}"/>
+
+                        <TextBlock Text="Dátum:" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding Datum}"/>
+
+                        <TextBlock Text="Jegy:" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding Jegy}"/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <TextBlock x:Name="TButasCount" Margin="415,10,454,730"></TextBlock>
     </Grid>
 </Window>
