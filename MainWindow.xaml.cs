@@ -57,6 +57,25 @@ namespace Utazas
             tipusok.Add("Válasszon típust!");
             tipusok.AddRange(utasok.Select(u => u.Tipus).Distinct().ToList());
             CBTipus.ItemsSource = tipusok;
+
+            DPdatum.SelectedDate = DateTime.Today;
+
+        }
+        private void TBazonositoChanged(object sender, TextChangedEventArgs e)
+        {
+            TBazonositoCount.Text = TBazonosito.Text.Length + "db";
+        }
+
+        private void RB_Checked(object sender, RoutedEventArgs e)
+        {
+            if(RBjegy.IsChecked == true)
+            {
+                GBberlet.Visibility = Visibility.Collapsed;
+            }
+            else if (RBberlet.IsChecked == true)
+            {
+                GBberlet.Visibility= Visibility.Visible;
+            }
         }
     }
 }
