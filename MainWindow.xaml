@@ -36,25 +36,32 @@
         <TextBlock x:Name="TBLegtobbUtasMegallo" Margin="415,98,454,642"></TextBlock>
         <TextBlock x:Name="TBKedvezmenyes" Margin="415,142,454,598"></TextBlock>
         <TextBlock x:Name="TBIngyenes" Margin="415,186,454,554"></TextBlock>
-        <ComboBox Name="CBMegallo" HorizontalAlignment="Left" Margin="415,235,0,0" VerticalAlignment="Top" Width="225" Height="29" SelectedIndex="0"/>
-        
-        <DatePicker x:Name="DPdatum" HorizontalAlignment="Left" Margin="660,235,0,0" VerticalAlignment="Top" Height="29" Width="170"/>
-        <TextBox TextChanged="TBazonositoChanged" x:Name="TBazonosito" MaxLength="7" HorizontalAlignment="Left" Margin="660,275,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="170" Height="29"/>
-        <TextBlock x:Name="TBazonositoCount" HorizontalAlignment="Left" Margin="856,277,0,0" TextWrapping="Wrap" Text="0db" VerticalAlignment="Top" Height="27"/>
+        <ComboBox Name="CBMegallo" HorizontalAlignment="Left" Margin="660,235,0,0" VerticalAlignment="Top" Width="170" Height="29" SelectedIndex="0"/>
 
-        <GroupBox Header="Bérlet vagy Jegy" Margin="856,409,180,285">
+        <DatePicker x:Name="DPdatum" HorizontalAlignment="Left" Margin="660,284,0,0" VerticalAlignment="Top" Height="30" Width="170"/>
+        <TextBox TextChanged="TBazonositoChanged" x:Name="TBazonosito" MaxLength="7" HorizontalAlignment="Left" Margin="660,332,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="170" Height="29"/>
+        <TextBlock x:Name="TBazonositoCount" HorizontalAlignment="Left" Margin="835,338,0,0" TextWrapping="Wrap" Text="0db" VerticalAlignment="Top" Height="17"/>
+
+        <GroupBox Header="Bérlet vagy Jegy" Margin="961,534,120,195">
             <StackPanel>
-                <RadioButton x:Name="RBberlet" IsChecked="True" Content="Bérlet" Checked="RB_Checked"/>
-                <RadioButton x:Name="RBjegy" Content="Jegy" Checked="RB_Checked"/>
+                <RadioButton x:Name="RBberlet" IsChecked="True" Content="Bérlet"/>
+                <RadioButton x:Name="RBjegy" Content="Jegy"/>
             </StackPanel>
         </GroupBox>
-        <Button Content="Adatok ellenőrzése és rögzítése" HorizontalAlignment="Left" Margin="607,634,0,0" VerticalAlignment="Top" Height="50" Width="270"/>
-        <GroupBox x:Name="GBberlet" Header="Bérlet további adatai" Margin="415,378,420,206">
+        <Button Content="Adatok ellenőrzése és rögzítése" HorizontalAlignment="Left" Margin="660,714,0,0" VerticalAlignment="Top" Height="50" Width="240" Click="Button_Click"/>
+
+        <GroupBox x:Name="GBberlet" Header="Bérlet további adatai" Margin="660,423,300,227">
             <StackPanel>
-                <ComboBox Name="CBTipus" HorizontalAlignment="Left" VerticalAlignment="Top" Width="225" Height="29" SelectedIndex="0"/>
-                <DatePicker HorizontalAlignment="Left" Height="30" Width="224"/>
+                <ComboBox x:Name="CBTipus" Width="229" Height="30" HorizontalAlignment="Right" SelectedIndex="0"/>
+                <DatePicker Height="30" Width="229" HorizontalAlignment="Right"/>
             </StackPanel>
         </GroupBox>
-
+        <GroupBox x:Name="GBjegy" Header="Jegy további adatai" Margin="660,562,300,97">
+            <StackPanel>
+                <Slider x:Name="SljegySlider" Width="220" Minimum="0" Maximum="10" IsSnapToTickEnabled="True" TickFrequency="1" ValueChanged="SljegySlider_ValueChanged"/>
+                <TextBlock x:Name="SLjegyDb" TextWrapping="Wrap" Text="0db"/>
+            </StackPanel>
+        </GroupBox>
+        <TextBox x:Name="TBfelszallIdo" HorizontalAlignment="Left" Margin="660,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="170" Height="29"/>
     </Grid>
 </Window>

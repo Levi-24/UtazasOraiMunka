@@ -66,15 +66,34 @@ namespace Utazas
             TBazonositoCount.Text = TBazonosito.Text.Length + "db";
         }
 
-        private void RB_Checked(object sender, RoutedEventArgs e)
+        private void SljegySlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if(RBjegy.IsChecked == true)
+            SLjegyDb.Text = SljegySlider.Value.ToString() + "db";
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (CBMegallo.SelectedIndex == 0)
             {
-                GBberlet.Visibility = Visibility.Collapsed;
+                MessageBox.Show("Nem választott megállót!", "Hiba!");
             }
-            else if (RBberlet.IsChecked == true)
+            else
             {
-                GBberlet.Visibility= Visibility.Visible;
+                if (!DPdatum.SelectedDate.HasValue)
+                {
+                    MessageBox.Show("Nem adott meg dátumot!", "Hiba!");
+                }
+                else
+                {
+                    if (TBazonosito.Text.Length != 7)
+                    {
+                        MessageBox.Show("Az azonosító nem 7 karakter hosszú!", "Hiba!");
+                    }
+                    else
+                    {
+                        if(TBfelszallIdo.Text.Length != 5 && TBfelszallIdo.Text[2] != ":")
+                    }
+                }
             }
         }
     }
