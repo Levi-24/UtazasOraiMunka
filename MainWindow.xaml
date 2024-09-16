@@ -61,5 +61,6 @@
 
         <!-- Button -->
         <Button Content="Adatok ellenőrzése és rögzítése" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Height="50" Width="240" Click="Button_Click" Margin="10"/>
+        <Button Content="Konzol feladatok" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Height="50" Width="240" Click="Console_Button_Click" Margin="74,385,43,165"/>
     </Grid>
 </Window>

@@ -14,19 +14,6 @@ namespace Utazas
             using StreamReader sr = new StreamReader(@"../../../src/utasadat.txt");
             while (!sr.EndOfStream) utasok.Add(new UtasAdat(sr.ReadLine()));
 
-            //int utasCount = utasok.Count;
-            //TButasCount.Text = utasCount.ToString() + " utas akart felszállni a buszra.";
-
-            //int nemSzallFel = utasok.Count(u => u.Jegy == 0 && u.Datum == 0 || u.Datum < u.FelszallasDatum && u.Datum != 0);
-            //TButasNemSzallFel.Text = nemSzallFel.ToString() + " utas nem szállhatott fel a buszra.";
-
-            //TBLegtobbUtasMegallo.Text = "A legtöbb utas (X) a (Y). megállóban próbált felszállni";
-
-            //int kedvezmenyes = utasok.Count(u => u.Tipus == "TAB" || u.Tipus == "NYB" && (u.Datum > u.FelszallasDatum));
-            //int ingyenes = utasok.Count(u => u.Tipus == "GYK" || u.Tipus == "NYP" && (u.Datum > u.FelszallasDatum));
-            //TBKedvezmenyes.Text = kedvezmenyes.ToString() + " utas utazik kedvezményes bérlettel.";
-            //TBIngyenes.Text = ingyenes.ToString() + " utas utazik ingyenes bérlettel.";
-
             var dsa = utasok.Where(u => u.Datum - u.FelszallasDatum <= 3 && u.Datum != 0).ToList();
 
             using StreamWriter writer = new StreamWriter(@"../../../src/lejar.txt", false);
@@ -129,7 +116,17 @@ namespace Utazas
                                     }
                                     else
                                     {
-                                        //ADat tarolas
+                                        using StreamWriter writer = new StreamWriter(@"../../../src/utasadat.txt", true);
+
+                                        if (RBberlet.IsChecked == true)
+                                        {
+                                            writer.WriteLine(CBMegallo.ToString()+ " " + DPdatum.SelectedDate.ToString() + "-" + TBfelszallIdo.ToString() + " " + TBazonosito.ToString() + " " + CBTipus.ToString() + " " + CBDatum.ToString());
+                                        }
+                                        else if (RBjegy.IsChecked == true)
+                                        {
+                                            writer.WriteLine(CBMegallo + " " + DPdatum.SelectedDate + "-" + TBfelszallIdo + " " + TBazonosito + " JGY " + SljegySlider.Value);
+                                        }
+
                                     }
                                 }
                             }
@@ -138,7 +135,27 @@ namespace Utazas
                 }
             }
         }
+
+        private void Console_Button_Click(object sender, RoutedEventArgs e)
+        {
+            int utasCount = utasok.Count;
+
+            int nemSzallFel = utasok.Count(u => u.Jegy == 0 && u.Datum == 0 || u.Datum < u.FelszallasDatum && u.Datum != 0);
+
+            var stopCounts = utasok
+                .GroupBy(a => a.MegalloSorszam)
+                .Select(group => new
+                {
+                    MegalloSorszam = group.Key,
+                    Count = group.Count()
+                })
+                .OrderByDescending(result => result.Count)
+                .FirstOrDefault();
+
+            int kedvezmenyes = utasok.Count(u => u.Tipus == "TAB" || u.Tipus == "NYB" && (u.Datum > u.FelszallasDatum));
+            int ingyenes = utasok.Count(u => u.Tipus == "GYK" || u.Tipus == "NYP" || u.Tipus == "RVS" && (u.Datum > u.FelszallasDatum));
+
+            MessageBox.Show($"A buszra {utasCount} utas akart felszállni. \nA buszra {nemSzallFel} utas nem szállhatott fel. \nA legtöbb ember a(z) {stopCounts.MegalloSorszam} megállóban szállt fel, összesen {stopCounts.Count} ember. \nIngyenesen utazók száma: {ingyenes} fő \nKedvezményesen utazók száma: {kedvezmenyes} fő");
+        }
     }
 }
-
-
