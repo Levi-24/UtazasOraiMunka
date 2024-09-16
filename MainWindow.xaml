@@ -1,8 +1,8 @@
 ﻿<Window x:Class="Utazas.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="eUtazás 2020 – Új felszállás" Height="450" Width="650">
-    <Grid Margin="10">
+        Title="eUtazás 2020 – Új felszállás" Height="450" Width="650" HorizontalAlignment="Left" VerticalAlignment="Top">
+    <Grid Width="650" Height="450" HorizontalAlignment="Left" VerticalAlignment="Top">
 
         <!-- Define rows and columns -->
         <Grid.RowDefinitions>
@@ -59,7 +59,7 @@
             </StackPanel>
         </GroupBox>
 
-        <Button Content="Adatok ellenőrzése és rögzítése" Height="50" Width="240" Click="Button_Click" Margin="56,146,56,10" Grid.Column="1" Grid.Row="4"/>
-        <Button Content="Konzol feladatok" Height="50" Width="240" Click="Console_Button_Click" Margin="0,146,0,10" Grid.Row="4"/>
+        <Button Content="Adatok ellenőrzése és rögzítése" Height="50" Width="240" Click="Button_Click" Margin="126,146,17,70" Grid.Column="1" Grid.Row="4"/>
+        <Button Content="Konzol feladatok" Height="50" Width="240" Click="Console_Button_Click" Margin="51,146,301,70" Grid.Row="4" Grid.ColumnSpan="2"/>
     </Grid>
 </Window>
