@@ -11,6 +11,8 @@ namespace Utazas
         public MainWindow()
         {
             InitializeComponent();
+            UpdateGroupBoxVisibility();
+
             using StreamReader sr = new StreamReader(@"../../../src/utasadat.txt");
             while (!sr.EndOfStream) utasok.Add(new UtasAdat(sr.ReadLine()));
 
@@ -48,28 +50,26 @@ namespace Utazas
             SLjegyDb.Text = SljegySlider.Value.ToString() + "db";
         }
 
-        private void RBberlet_Checked(object sender, RoutedEventArgs e)
-        {
-            UpdateGroupBoxVisibility();
-        }
-
-        private void RBjegy_Checked(object sender, RoutedEventArgs e)
+        private void UpdateJegyBerlet(object sender, RoutedEventArgs e)
         {
             UpdateGroupBoxVisibility();
         }
 
         private void UpdateGroupBoxVisibility()
         {
-            //if (RBberlet.IsChecked == true)
-            //{
-            //    GBberlet.Visibility = Visibility.Visible;
-            //    GBjegy.Visibility = Visibility.Collapsed;
-            //}
-            //else if (RBjegy.IsChecked == true)
-            //{
-            //    GBberlet.Visibility = Visibility.Collapsed;
-            //    GBjegy.Visibility = Visibility.Visible;
-            //}
+            if (RBberlet != null && RBjegy != null)
+            {
+                if (RBberlet.IsChecked == true)
+                {
+                    GBberlet.Visibility = Visibility.Visible;
+                    GBjegy.Visibility = Visibility.Collapsed;
+                }
+                else if (RBjegy.IsChecked == true)
+                {
+                    GBberlet.Visibility = Visibility.Collapsed;
+                    GBjegy.Visibility = Visibility.Visible;
+                }
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -110,7 +110,7 @@ namespace Utazas
                                 }
                                 else
                                 {
-                                    if (!CBDatum.SelectedDate.HasValue)
+                                    if (!CBDatum.SelectedDate.HasValue && RBberlet.IsChecked == true)
                                     {
                                         MessageBox.Show("Nem adta meg a bérlet érvényességi idejét!", "Hiba!");
                                     }
@@ -120,13 +120,42 @@ namespace Utazas
 
                                         if (RBberlet.IsChecked == true)
                                         {
-                                            writer.WriteLine(CBMegallo.ToString()+ " " + DPdatum.SelectedDate.ToString() + "-" + TBfelszallIdo.ToString() + " " + TBazonosito.ToString() + " " + CBTipus.ToString() + " " + CBDatum.ToString());
+                                            int megalloSorszam = Convert.ToInt32(CBMegallo.SelectedItem);
+
+                                            DateTime felszallasDatum = DPdatum.SelectedDate.Value;
+                                            string felszallasIdo = TBfelszallIdo.Text;
+
+                                            DateTime felszallasDatumIdo = DateTime.ParseExact(felszallasDatum.ToString("yyyyMMdd") + " " + felszallasIdo, "yyyyMMdd HH:mm", null);
+                                            string formattedDatumIdo = felszallasDatumIdo.ToString("yyyyMMdd-HHmm");
+
+                                            string kartyaAzonosito = TBazonosito.Text;
+
+                                            string berletTipus = CBTipus.SelectedItem.ToString();
+
+                                            DateTime berletLejaratDatum = CBDatum.SelectedDate.Value;
+                                            string formattedBerletLejaratDatum = berletLejaratDatum.ToString("yyyyMMdd");
+
+                                            string formattedData = $"{megalloSorszam} {formattedDatumIdo} {kartyaAzonosito} {berletTipus} {formattedBerletLejaratDatum}";
+
+                                            writer.WriteLine(formattedData);
                                         }
                                         else if (RBjegy.IsChecked == true)
                                         {
-                                            writer.WriteLine(CBMegallo + " " + DPdatum.SelectedDate + "-" + TBfelszallIdo + " " + TBazonosito + " JGY " + SljegySlider.Value);
-                                        }
+                                            int megalloSorszam = Convert.ToInt32(CBMegallo.SelectedItem);
 
+                                            DateTime felszallasDatum = DPdatum.SelectedDate.Value;
+                                            string felszallasIdo = TBfelszallIdo.Text;
+
+                                            DateTime felszallasDatumIdo = DateTime.ParseExact(felszallasDatum.ToString("yyyyMMdd") + " " + felszallasIdo, "yyyyMMdd HH:mm", null);
+                                            string formattedDatumIdo = felszallasDatumIdo.ToString("yyyyMMdd-HHmm");
+
+                                            string kartyaAzonosito = TBazonosito.Text;
+                                            int jegyDarab = Convert.ToInt32(SljegySlider.Value);
+
+                                            string formattedData = $"{megalloSorszam} {formattedDatumIdo} {kartyaAzonosito} JGY {jegyDarab}";
+
+                                            writer.WriteLine(formattedData);
+                                        }
                                     }
                                 }
                             }
