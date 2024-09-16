@@ -1,14 +1,6 @@
 ﻿using System.IO;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Utazas
 {
@@ -22,20 +14,18 @@ namespace Utazas
             using StreamReader sr = new StreamReader(@"../../../src/utasadat.txt");
             while (!sr.EndOfStream) utasok.Add(new UtasAdat(sr.ReadLine()));
 
-            utasListBox.ItemsSource = utasok;
+            //int utasCount = utasok.Count;
+            //TButasCount.Text = utasCount.ToString() + " utas akart felszállni a buszra.";
 
-            int utasCount = utasok.Count;
-            TButasCount.Text = utasCount.ToString() + " utas akart felszállni a buszra.";
+            //int nemSzallFel = utasok.Count(u => u.Jegy == 0 && u.Datum == 0 || u.Datum < u.FelszallasDatum && u.Datum != 0);
+            //TButasNemSzallFel.Text = nemSzallFel.ToString() + " utas nem szállhatott fel a buszra.";
 
-            int nemSzallFel = utasok.Count(u => u.Jegy == 0 && u.Datum == 0 || u.Datum < u.FelszallasDatum && u.Datum != 0);
-            TButasNemSzallFel.Text = nemSzallFel.ToString() + " utas nem szállhatott fel a buszra.";
+            //TBLegtobbUtasMegallo.Text = "A legtöbb utas (X) a (Y). megállóban próbált felszállni";
 
-            TBLegtobbUtasMegallo.Text = "A legtöbb utas (X) a (Y). megállóban próbált felszállni";
-
-            int kedvezmenyes = utasok.Count(u => u.Tipus == "TAB" || u.Tipus == "NYB" && (u.Datum > u.FelszallasDatum));
-            int ingyenes = utasok.Count(u => u.Tipus == "GYK" || u.Tipus == "NYP" && (u.Datum > u.FelszallasDatum));
-            TBKedvezmenyes.Text = kedvezmenyes.ToString() + " utas utazik kedvezményes bérlettel.";
-            TBIngyenes.Text = ingyenes.ToString() + " utas utazik ingyenes bérlettel.";
+            //int kedvezmenyes = utasok.Count(u => u.Tipus == "TAB" || u.Tipus == "NYB" && (u.Datum > u.FelszallasDatum));
+            //int ingyenes = utasok.Count(u => u.Tipus == "GYK" || u.Tipus == "NYP" && (u.Datum > u.FelszallasDatum));
+            //TBKedvezmenyes.Text = kedvezmenyes.ToString() + " utas utazik kedvezményes bérlettel.";
+            //TBIngyenes.Text = ingyenes.ToString() + " utas utazik ingyenes bérlettel.";
 
             var dsa = utasok.Where(u => u.Datum - u.FelszallasDatum <= 3 && u.Datum != 0).ToList();
 
@@ -71,6 +61,30 @@ namespace Utazas
             SLjegyDb.Text = SljegySlider.Value.ToString() + "db";
         }
 
+        private void RBberlet_Checked(object sender, RoutedEventArgs e)
+        {
+            UpdateGroupBoxVisibility();
+        }
+
+        private void RBjegy_Checked(object sender, RoutedEventArgs e)
+        {
+            UpdateGroupBoxVisibility();
+        }
+
+        private void UpdateGroupBoxVisibility()
+        {
+            //if (RBberlet.IsChecked == true)
+            //{
+            //    GBberlet.Visibility = Visibility.Visible;
+            //    GBjegy.Visibility = Visibility.Collapsed;
+            //}
+            //else if (RBjegy.IsChecked == true)
+            //{
+            //    GBberlet.Visibility = Visibility.Collapsed;
+            //    GBjegy.Visibility = Visibility.Visible;
+            //}
+        }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             if (CBMegallo.SelectedIndex == 0)
@@ -91,7 +105,35 @@ namespace Utazas
                     }
                     else
                     {
-                        if(TBfelszallIdo.Text.Length != 5 && TBfelszallIdo.Text[2] != ":")
+                        if(TBazonosito.Text.Contains(",") || Convert.ToInt32(TBazonosito.Text) < 0)
+                        {
+                            MessageBox.Show("A kártya azonosítója nem pozitív egész szám!", "Hiba!");
+                        }
+                        else
+                        {
+                            if (TBfelszallIdo.Text.Length != 5 && !(TBfelszallIdo.Text.Contains(":")))
+                            {
+                                MessageBox.Show("Nem jól adtad meg az időt!", "Hiba!");
+                            }
+                            else
+                            {
+                                if (RBberlet.IsChecked == true && CBTipus.SelectedIndex == 0)
+                                {
+                                    MessageBox.Show("Nem adta meg a bérelt típusát!", "Hiba!");
+                                }
+                                else
+                                {
+                                    if (!CBDatum.SelectedDate.HasValue)
+                                    {
+                                        MessageBox.Show("Nem adta meg a bérlet érvényességi idejét!", "Hiba!");
+                                    }
+                                    else
+                                    {
+                                        //ADat tarolas
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }

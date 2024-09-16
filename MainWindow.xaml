@@ -3,65 +3,63 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="eUtazás 2020 – Új felszállás" Height="800" Width="1200">
     <Grid>
-        <ListBox Name="utasListBox" HorizontalAlignment="Left" VerticalAlignment="Center" Height="764" Width="410">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Megálló sorszám:" FontWeight="Bold"/>
-                        <TextBlock Text="{Binding MegalloSorszam}"/>
+        <!-- Define rows and columns -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-                        <TextBlock Text="Felszállás dátum:" FontWeight="Bold"/>
-                        <TextBlock Text="{Binding FelszallasDatum}"/>
+        <!-- Megálló sorszáma -->
+        <Label Content="Megálló sorszáma:" Grid.Row="0" Grid.Column="0" Margin="10" VerticalAlignment="Center"/>
+        <ComboBox Name="CBMegallo" Grid.Row="0" Grid.Column="1" Width="170" Height="29" SelectedIndex="0" Margin="10,0,0,0"/>
 
-                        <TextBlock Text="Felszállás idő:" FontWeight="Bold"/>
-                        <TextBlock Text="{Binding FelszallasIdo}"/>
+        <!-- Felszállás Dátuma -->
+        <Label Content="Felszállás Dátuma:" Grid.Row="1" Grid.Column="0" Margin="10" VerticalAlignment="Center"/>
+        <DatePicker x:Name="DPdatum" Grid.Row="1" Grid.Column="1" Width="170" Height="30" Margin="10,0,0,0"/>
 
-                        <TextBlock Text="Azonosító:" FontWeight="Bold"/>
-                        <TextBlock Text="{Binding Azonosito}"/>
+        <!-- Felszállás Időpontja [óó:pp] -->
+        <Label Content="Felszállás Időpontja [óó:pp]:" Grid.Row="2" Grid.Column="0" Margin="10" VerticalAlignment="Center"/>
+        <TextBox x:Name="TBfelszallIdo" Grid.Row="2" Grid.Column="1" Width="170" Height="29" Margin="10,0,0,0"/>
 
-                        <TextBlock Text="Típus:" FontWeight="Bold"/>
-                        <TextBlock Text="{Binding Tipus}"/>
+        <!-- Kártya azonosítója -->
+        <Label Content="Kártya azonosítója:" Grid.Row="3" Grid.Column="0" Margin="10" VerticalAlignment="Center"/>
+        <TextBox TextChanged="TBazonositoChanged" x:Name="TBazonosito" MaxLength="7" Grid.Row="3" Grid.Column="1" Width="133" Height="29" Margin="10,0,0,0"/>
+        <TextBlock x:Name="TBazonositoCount" Grid.Row="3" Grid.Column="2" Text="0db" VerticalAlignment="Center" Margin="10,0,0,0"/>
 
-                        <TextBlock Text="Dátum:" FontWeight="Bold"/>
-                        <TextBlock Text="{Binding Datum}"/>
-
-                        <TextBlock Text="Jegy:" FontWeight="Bold"/>
-                        <TextBlock Text="{Binding Jegy}"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        <TextBlock x:Name="TButasCount" Margin="415,10,454,730"></TextBlock>
-        <TextBlock x:Name="TButasNemSzallFel" Margin="415,54,454,686"></TextBlock>
-        <TextBlock x:Name="TBLegtobbUtasMegallo" Margin="415,98,454,642"></TextBlock>
-        <TextBlock x:Name="TBKedvezmenyes" Margin="415,142,454,598"></TextBlock>
-        <TextBlock x:Name="TBIngyenes" Margin="415,186,454,554"></TextBlock>
-        <ComboBox Name="CBMegallo" HorizontalAlignment="Left" Margin="660,235,0,0" VerticalAlignment="Top" Width="170" Height="29" SelectedIndex="0"/>
-
-        <DatePicker x:Name="DPdatum" HorizontalAlignment="Left" Margin="660,284,0,0" VerticalAlignment="Top" Height="30" Width="170"/>
-        <TextBox TextChanged="TBazonositoChanged" x:Name="TBazonosito" MaxLength="7" HorizontalAlignment="Left" Margin="660,332,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="170" Height="29"/>
-        <TextBlock x:Name="TBazonositoCount" HorizontalAlignment="Left" Margin="835,338,0,0" TextWrapping="Wrap" Text="0db" VerticalAlignment="Top" Height="17"/>
-
-        <GroupBox Header="Bérlet vagy Jegy" Margin="961,534,120,195">
+        <!-- Bérlet vagy Jegy GroupBox -->
+        <GroupBox Header="Bérlet vagy Jegy" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Margin="10">
             <StackPanel>
-                <RadioButton x:Name="RBberlet" IsChecked="True" Content="Bérlet"/>
-                <RadioButton x:Name="RBjegy" Content="Jegy"/>
+                <RadioButton x:Name="RBberlet" IsChecked="True" Content="Bérlet" Checked="RBberlet_Checked"/>
+                <RadioButton x:Name="RBjegy" Content="Jegy" Checked="RBjegy_Checked"/>
             </StackPanel>
         </GroupBox>
-        <Button Content="Adatok ellenőrzése és rögzítése" HorizontalAlignment="Left" Margin="660,714,0,0" VerticalAlignment="Top" Height="50" Width="240" Click="Button_Click"/>
 
-        <GroupBox x:Name="GBberlet" Header="Bérlet további adatai" Margin="660,423,300,227">
+        <!-- Bérlet további adatai GroupBox -->
+        <GroupBox x:Name="GBberlet" Header="Bérlet további adatai" Grid.Row="4" Grid.Column="3" Margin="406,20,38,0">
             <StackPanel>
-                <ComboBox x:Name="CBTipus" Width="229" Height="30" HorizontalAlignment="Right" SelectedIndex="0"/>
-                <DatePicker Height="30" Width="229" HorizontalAlignment="Right"/>
+                <ComboBox x:Name="CBTipus" Width="184" Height="30" SelectedIndex="0"/>
+                <DatePicker x:Name="CBDatum" Height="30" Width="184"/>
             </StackPanel>
         </GroupBox>
-        <GroupBox x:Name="GBjegy" Header="Jegy további adatai" Margin="660,562,300,97">
+
+        <!-- Jegy további adatai GroupBox -->
+        <GroupBox x:Name="GBjegy" Header="Jegy további adatai" Grid.Row="4" Grid.Column="3" Margin="0,10,445,10">
             <StackPanel>
-                <Slider x:Name="SljegySlider" Width="220" Minimum="0" Maximum="10" IsSnapToTickEnabled="True" TickFrequency="1" ValueChanged="SljegySlider_ValueChanged"/>
-                <TextBlock x:Name="SLjegyDb" TextWrapping="Wrap" Text="0db"/>
+                <Slider x:Name="SljegySlider" Width="97" Minimum="0" Maximum="10" IsSnapToTickEnabled="True" TickFrequency="1" ValueChanged="SljegySlider_ValueChanged"/>
+                <TextBlock x:Name="SLjegyDb" Text="0db"/>
             </StackPanel>
         </GroupBox>
-        <TextBox x:Name="TBfelszallIdo" HorizontalAlignment="Left" Margin="660,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="170" Height="29"/>
+
+        <!-- Button -->
+        <Button Content="Adatok ellenőrzése és rögzítése" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Height="50" Width="240" Click="Button_Click" Margin="10"/>
     </Grid>
 </Window>
